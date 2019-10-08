@@ -102,4 +102,27 @@ public class ExternalStorageTestActivity extends AppCompatActivity implements Vi
         }
         mDisplayResponseTv.setText(responseData);
     }
+
+    /**
+     * 删除文件
+     * @param file
+     * @return 删除成功，返回true，删除失败，返回false
+     */
+    private boolean deleteDirectory(File file) {
+        if (file.exists()) {
+            File[] files = file.listFiles();
+            if (files == null) {
+                return true;
+            }
+            for (File subFile : files) {
+                if (subFile.isDirectory()) {
+                    deleteDirectory(subFile);
+                } else {
+                    subFile.delete();
+                }
+            }
+
+        }
+        return file.delete();
+    }
 }
